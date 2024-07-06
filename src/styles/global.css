@@ -1,0 +1,18 @@
+:root {
+    --background-color: #EEF0F7;
+    --main-block-color: #FFFFFF;
+    --text-color: #9395B8;
+    --hovered-text-color: #06082C;
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+.icon-wrapper:hover svg path {
+    stroke: var(--hovered-text-color);
+}
+
+.active svg path {
+    stroke: var(--hovered-text-color);
+}
