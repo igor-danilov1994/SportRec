@@ -1,14 +1,14 @@
 import {ListItem, ListItemIcon, ListItemText} from "@mui/material";
-import {useLocation, useNavigate} from "react-router-dom";
 
 import {PageListType} from "./Navigation";
 import {MainLanguageList, translations} from "../../assets/translations/translations";
 import {useLanguageContext} from "../../store";
+import {useLocation, useNavigate} from "react-router-dom";
 
 interface NavigationItemProps extends PageListType {}
 
 export const NavigationItem = (props: NavigationItemProps) => {
-    const {link, title, icon} = props
+    const {link, icon, title} = props
     const { language } = useLanguageContext();
     const navigate = useNavigate();
     const location = useLocation();
@@ -16,14 +16,14 @@ export const NavigationItem = (props: NavigationItemProps) => {
     const isActive = location.pathname === `/${language}${link}`;
     const translatedTitle = translations[language as MainLanguageList][title];
 
-    const handleNavigation = (path: string) => {
-        navigate(`/${language}${path}`);
+    const handleNavigation = () => {
+        navigate(`/${language}${link}`);
     };
 
     return (
         <ListItem
             button
-            onClick={() => handleNavigation(link)}
+            onClick={handleNavigation}
             sx={{
                 ":hover": {
                     backgroundColor: 'var(--main-block-color)',

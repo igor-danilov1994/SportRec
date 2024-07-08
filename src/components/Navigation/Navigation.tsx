@@ -1,5 +1,6 @@
-import {ReactNode} from "react";
-import {Box, Container, List} from '@mui/material';
+import React, {ReactNode, useCallback, useState} from "react";
+import {Box, Container, Drawer, IconButton, List} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import {Notification} from "../Notification";
 import {LanguageSelect} from "../LanguageSelect";
@@ -47,6 +48,34 @@ const pageList: PageListType[] = [
 ];
 
 export const Navigation = () => {
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const handleDrawerToggle = useCallback(() => {
+        setDrawerOpen(!drawerOpen);
+    }, [drawerOpen]);
+
+    const drawer = (
+        <Box
+            sx={{ width: 250 }}
+            role="presentation"
+            onClick={handleDrawerToggle}
+            onKeyDown={handleDrawerToggle}
+        >
+            <List>
+                {pageList.map(page => (
+                    <NavigationItem
+                        key={page.title}
+                        {...page}
+                    />
+                ))}
+            </List>
+            <Box sx={{ display: { xs: 'block', sm: 'none', width: '100%' }, padding: 2 }}>
+                <LanguageSelect />
+                <Notification />
+            </Box>
+        </Box>
+    );
+
     return (
         <Box sx={{
             maxWidth: '100%',
@@ -57,24 +86,46 @@ export const Navigation = () => {
             top: 0,
             left: 0,
             right: 0,
-            zIndex: 99
+            zIndex: 99,
         }}>
             <nav>
                 <Container sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'space-between',
                     color: 'var(--text-color)',
                 }}>
-                   <Logo/>
-                    <List sx={{ display: 'flex' }}>
+                    <Logo />
+                    <List sx={{ display: { xs: 'none', sm: 'flex' } }}>
                         {pageList.map(page => (
-                            <NavigationItem key={page.title} {...page}  />
+                            <NavigationItem
+                                key={page.title}
+                                {...page}
+                            />
                         ))}
                     </List>
-                    <LanguageSelect />
-                    <Notification />
+                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                        <LanguageSelect />
+                        <Notification />
+                    </Box>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{ display: { sm: 'none' } }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
                 </Container>
             </nav>
+            <Drawer
+                anchor="right"
+                open={drawerOpen}
+                onClose={handleDrawerToggle}
+            >
+                {drawer}
+            </Drawer>
         </Box>
     );
 };
