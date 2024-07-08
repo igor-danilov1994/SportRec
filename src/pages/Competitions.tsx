@@ -3,10 +3,14 @@ import {useQuery} from 'react-query';
 import {List, ListItem, ListItemText, Typography} from '@mui/material';
 import {CompetitionType, fetchCompetitions} from 'api';
 import {ErrorLoadingData, Loading, PageWrapper} from 'components';
-
+import {FromTypes} from "../api/createClient";
 
 export const Competitions = () => {
-    const { data: competitions, error, isLoading } = useQuery<CompetitionType[], Error>('competitions', fetchCompetitions);
+    const {
+        data: competitions,
+        error,
+        isLoading
+    } = useQuery<CompetitionType[], Error>(FromTypes.COMPETITIONS, fetchCompetitions);
 
     if (isLoading) {
         return (

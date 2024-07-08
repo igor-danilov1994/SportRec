@@ -1,4 +1,4 @@
-import {supabase} from "api/createClient";
+import {FromTypes, getDataWithSupabase} from "api/createClient";
 import {queryClient} from "../queryClient";
 
 export type OrganizationType = {
@@ -10,16 +10,10 @@ export type OrganizationType = {
 };
 
 const _fetchOrganizations = async (): Promise<OrganizationType[]> => {
-    const { data, error } = await supabase.from<'organisations', OrganizationType>('organisations')
-        .select('*')
-        .returns<OrganizationType[]>();
-    if (error) {
-        throw new Error(error.message);
-    }
-    return data || [];
+    return getDataWithSupabase<OrganizationType[]>(FromTypes.ORGANISATIONS)
 };
 
 //For cache data
 export const fetchOrganizations = () => {
-    return queryClient.fetchQuery<OrganizationType[], Error>('organisations', _fetchOrganizations);
+    return queryClient.fetchQuery<OrganizationType[], Error>(FromTypes.ORGANISATIONS, _fetchOrganizations);
 };

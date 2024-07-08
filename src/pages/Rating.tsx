@@ -3,9 +3,10 @@ import {List, ListItem, ListItemText, Typography} from '@mui/material';
 
 import {fetchRatings, RatingType} from '../api';
 import {ErrorLoadingData, Loading, PageWrapper} from 'components';
+import {FromTypes} from "../api/createClient";
 
 export const Rating = () => {
-    const { data: ratings, error, isLoading } = useQuery<RatingType[], Error>('ratings', fetchRatings);
+    const { data: ratings, error, isLoading } = useQuery<RatingType[], Error>(FromTypes.RATINGS, fetchRatings);
 
     if (isLoading) {
         return (

@@ -1,4 +1,4 @@
-import {supabase} from "api/createClient";
+import {FromTypes, getDataWithSupabase} from "api/createClient";
 import {queryClient} from "../queryClient";
 
 export type ProductType = {
@@ -10,14 +10,10 @@ export type ProductType = {
 };
 
 const _fetchMarketplace = async (): Promise<ProductType[]> => {
-    const { data, error } = await supabase.from<'marketplace', ProductType>('marketplace').select('*').returns<ProductType[]>();
-    if (error) {
-        throw new Error(error.message);
-    }
-    return data || [];
+    return getDataWithSupabase<ProductType[]>(FromTypes.MARKETPLACE)
 };
 
 //For cache data
 export const fetchMarketplace = () => {
-    return queryClient.fetchQuery<ProductType[], Error>('marketplace', _fetchMarketplace);
+    return queryClient.fetchQuery<ProductType[], Error>(FromTypes.MARKETPLACE, _fetchMarketplace);
 };

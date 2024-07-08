@@ -1,4 +1,4 @@
-import {supabase} from "api/createClient";
+import {FromTypes, getDataWithSupabase} from "api/createClient";
 import {queryClient} from "../queryClient";
 
 export type LiveStreamType = {
@@ -11,16 +11,10 @@ export type LiveStreamType = {
 };
 
 const _fetchLiveStreams = async (): Promise<LiveStreamType[]> => {
-    const { data, error } = await supabase.from<'live_streams',LiveStreamType>('live_streams')
-        .select('*')
-        .returns<LiveStreamType[]>();
-    if (error) {
-        throw new Error(error.message);
-    }
-    return data || [];
+    return getDataWithSupabase<LiveStreamType[]>(FromTypes.LIVE_STREAM)
 };
 
 //For cache data
 export const fetchLiveStreams = () => {
-    return queryClient.fetchQuery<LiveStreamType[], Error>('live_streams', _fetchLiveStreams);
+    return queryClient.fetchQuery<LiveStreamType[], Error>(FromTypes.LIVE_STREAM, _fetchLiveStreams);
 };

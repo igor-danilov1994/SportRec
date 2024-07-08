@@ -3,9 +3,14 @@ import {List, ListItem, ListItemText, Typography} from '@mui/material';
 
 import {fetchLiveStreams, LiveStreamType} from '../api';
 import {ErrorLoadingData, Loading, PageWrapper} from 'components';
+import {FromTypes} from "../api/createClient";
 
 export const Live = () => {
-    const { data: liveStreams, error, isLoading } = useQuery<LiveStreamType[], Error>('live_streams', fetchLiveStreams);
+    const {
+        data: liveStreams,
+        error,
+        isLoading
+    } = useQuery<LiveStreamType[], Error>(FromTypes.LIVE_STREAM, fetchLiveStreams);
 
     if (isLoading) {
         return (

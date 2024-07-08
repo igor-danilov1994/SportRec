@@ -1,5 +1,5 @@
 import {queryClient} from "../queryClient";
-import {supabase} from "../createClient";
+import {FromTypes, getDataWithSupabase} from "../createClient";
 
 export type CompetitionType = {
     id: number;
@@ -10,14 +10,10 @@ export type CompetitionType = {
 };
 
 const _fetchCompetitions = async (): Promise<CompetitionType[]> => {
-    const { data, error } = await supabase.from<'competitions', CompetitionType>('competitions').select('*').returns<CompetitionType[]>();
-    if (error) {
-        throw new Error(error.message);
-    }
-    return data || [];
+    return getDataWithSupabase<CompetitionType[]>(FromTypes.COMPETITIONS)
 };
 
 //For cache data
 export const fetchCompetitions = () => {
-    return queryClient.fetchQuery<CompetitionType[], Error>('competitions', _fetchCompetitions);
+    return queryClient.fetchQuery<CompetitionType[], Error>(FromTypes.COMPETITIONS, _fetchCompetitions);
 };

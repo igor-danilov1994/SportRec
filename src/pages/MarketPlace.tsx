@@ -3,10 +3,15 @@ import {List, ListItem, ListItemText, Typography} from '@mui/material';
 
 import {fetchMarketplace, ProductType} from 'api';
 import {ErrorLoadingData, Loading, PageWrapper} from 'components';
+import {FromTypes} from "../api/createClient";
 
 
 export const MarketPlace = () => {
-    const { data: products, error, isLoading } = useQuery<ProductType[], Error>('marketplace', fetchMarketplace);
+    const {
+        data: products,
+        error,
+        isLoading
+    } = useQuery<ProductType[], Error>(FromTypes.MARKETPLACE, fetchMarketplace);
 
     if (isLoading) {
         return (

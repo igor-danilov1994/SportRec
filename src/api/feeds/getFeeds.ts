@@ -1,4 +1,4 @@
-import {supabase} from "../createClient";
+import {FromTypes, getDataWithSupabase} from "../createClient";
 import {queryClient} from "../queryClient";
 
 export type PostType = {
@@ -9,15 +9,10 @@ export type PostType = {
 };
 
 const _getFeeds = async (): Promise<PostType[]> => {
-    const { data, error } = await supabase.from('posts').select('*').returns<PostType[]>();
-    if (error) {
-        throw new Error(error.message);
-    }
-
-    return data
+    return getDataWithSupabase<PostType[]>(FromTypes.POSTS)
 };
 
 //For cache data
 export const fetchFeeds = () => {
-    return queryClient.fetchQuery<PostType[], Error>('posts', _getFeeds);
+    return queryClient.fetchQuery<PostType[], Error>(FromTypes.POSTS, _getFeeds);
 };

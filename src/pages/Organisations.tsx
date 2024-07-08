@@ -3,10 +3,11 @@ import {Box, Typography} from '@mui/material';
 
 import {fetchOrganizations, OrganizationType} from '../api';
 import {ErrorLoadingData, Loading, PageWrapper} from 'components';
+import {FromTypes} from "../api/createClient";
 
 export const Organisations = () => {
     const { data: organizations, error, isLoading }: UseQueryResult<OrganizationType[], Error> = useQuery(
-        'organisations',
+       FromTypes.ORGANISATIONS,
         fetchOrganizations
     );
 

@@ -3,9 +3,10 @@ import {useQuery} from 'react-query';
 import {Box, Typography} from '@mui/material';
 import {fetchFeeds, PostType} from '../api';
 import {ErrorLoadingData, Loading, PageWrapper} from 'components';
+import {FromTypes} from "../api/createClient";
 
 export const Feed = () => {
-  const { data: feeds, error, isLoading } = useQuery<PostType[] | null, Error>('posts', fetchFeeds);
+  const { data: feeds, error, isLoading } = useQuery<PostType[] | null, Error>(FromTypes.POSTS, fetchFeeds);
 
   if (isLoading) {
     return (

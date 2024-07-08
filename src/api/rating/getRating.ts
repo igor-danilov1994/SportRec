@@ -1,4 +1,4 @@
-import {supabase} from "api/createClient";
+import {FromTypes, getDataWithSupabase} from "api/createClient";
 import {queryClient} from "../queryClient";
 
 export interface RatingType {
@@ -8,15 +8,10 @@ export interface RatingType {
 }
 
 const _fetchRatings = async (): Promise<RatingType[]> => {
-    const { data, error } = await supabase.from<'ratings', RatingType>('ratings').select('*').returns<RatingType[]>();
-    if (error) {
-        throw new Error(error.message);
-    }
-    return data || [];
+    return getDataWithSupabase<RatingType[]>(FromTypes.RATINGS)
 };
-
 
 //For cache data
 export const fetchRatings = () => {
-    return queryClient.fetchQuery<RatingType[], Error>('ratings', _fetchRatings);
+    return queryClient.fetchQuery<RatingType[], Error>(FromTypes.RATINGS, _fetchRatings);
 };
