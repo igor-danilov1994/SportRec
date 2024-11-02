@@ -1,11 +1,9 @@
 import {StrictMode} from 'react';
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter as Router} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
 import './index.css';
 import './styles/global.css';
-import {ErrorBoundary} from "./components/ErrorBoundary";
 import {App} from "./App";
 
 const root = ReactDOM.createRoot(
@@ -13,11 +11,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <StrictMode>
-      <ErrorBoundary>
-              <Router>
-                      <App />
-              </Router>
-      </ErrorBoundary>
+      <App />
   </StrictMode>
 );
 
