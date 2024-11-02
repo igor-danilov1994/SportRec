@@ -1,16 +1,17 @@
-import {Box, Container} from "@mui/material";
+import {Box} from "@mui/material";
 
-import {Navigation} from "./components";
-import {AppRouter} from "AppRouter";
-
+//@ts-ignore
+let webApp = window?.Telegram?.WebApp;
 
 export const App = () => {
     return (
     <Box>
-        <Navigation />
-        <Container>
-            <AppRouter/>
-        </Container>
+        {webApp && <span>webApp: {JSON.stringify(webApp)}</span>}
+        {/*<Navigation />*/}
+        {/*<Container>*/}
+        {/*    <AppRouter/>*/}
+        {/*</Container>*/}
     </Box>
     );
 };
+
